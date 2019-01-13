@@ -19,7 +19,7 @@ class ShallowNet(nn.Module):
 
     def forward(self, x):
         # Applying first CONV => RELU layer
-        x = F.relu(self.conv1(x))  # 32, 32, 32
+        x = F.relu(self.conv1(x))
 
         # Flatten to feed FC layer
         x = x.view(-1, self.num_flat_features(x))

@@ -38,7 +38,6 @@ class Mnist_NN(nn.Module):
         x = F.relu(self.lin2(x))
         return self.lin3(x)
 
-## Batch size
 @click.command()
 @click.option( 
     '--input_path',

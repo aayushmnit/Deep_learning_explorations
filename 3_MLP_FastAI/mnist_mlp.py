@@ -66,14 +66,14 @@ class Mnist_NN(nn.Module):
     '--epochs',
     '-e',
     default=5,
-    help='Batch size'
+    help='Number of epochs'
 )
 
 @click.option(
     '--learning_rate',
     '-lr',
     default=1e-3,
-    help='Batch size'
+    help='Learning Rate'
 )
 
 def run_mnist(  input_path, 

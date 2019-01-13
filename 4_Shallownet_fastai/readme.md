@@ -1,6 +1,6 @@
 ## Shallownet on CIFAR10 using FastAI and Pytorch
 
-In this folder, I have trained Multi-Layer Perceptron using FastAI and Pytorch. To go through the coding process, you can refer to the Jupyter notebook. Before running the code make sure you download and unzip [CIFAR10 dataset](https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz) from [fastai dataset](https://course.fast.ai/datasets) pages
+In this folder, I have trained ShallowNet using FastAI and Pytorch. To go through the coding process, you can refer to the [Jupyter notebook](https://nbviewer.jupyter.org/github/aayushmnit/Deep_learning_explorations/blob/master/4_Shallownet_fastai/Shallownet%20using%20FastAI.ipynb). Before running the code make sure you download and unzip [CIFAR10 dataset](https://s3.amazonaws.com/fast-ai-imageclas/cifar10.tgz) from [fastai dataset](https://course.fast.ai/datasets) pages
 
 You can use the following example command with different parameters to experiment with this script-
 ```bash

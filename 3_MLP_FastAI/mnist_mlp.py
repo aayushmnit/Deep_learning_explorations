@@ -20,8 +20,6 @@ from fastai.vision.data import ImageItemList
 from fastai.basic_train import Learner
 from fastai.metrics import accuracy
 from pathlib import Path
-#from fastai.vision import *
-
 from sklearn.metrics import classification_report
 
 ## Defining Model

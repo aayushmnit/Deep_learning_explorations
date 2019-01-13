@@ -10,8 +10,7 @@ python mnist_mlp.py --input_path "../data/mnist_png" --output_path "./" --epochs
 ```
 
 Here's how it looks when it run in command interface - 
-<img scr="https://raw.githubusercontent.com/aayushmnit/Deep_learning_explorations/master/3_MLP_FastAI/run_snapshot.PNG">
-
+<img src="https://raw.githubusercontent.com/aayushmnit/Deep_learning_explorations/master/3_MLP_FastAI/run_snapshot.PNG">
 
 Outputs are loss and metric plots during training -
 <img src="https://raw.githubusercontent.com/aayushmnit/Deep_learning_explorations/master/3_MLP_FastAI/loss.png">

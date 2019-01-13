@@ -1,6 +1,6 @@
 ## Multi-Layer Perceptron using FastAI and Pytorch
 
-In this folder, I have trained Multi-Layer Perceptron using FastAI and Pytorch. To go through the coding process, you can refer to the [Jupyter notebook](https://nbviewer.jupyter.org/github/aayushmnit/Deep_learning_explorations/blob/master/3_MLP_FastAI/MLP%20using%20Fast%20%20%26%20Pytorch.ipynb). 
+In this folder, I have trained Multi-Layer Perceptron using [FastAI v1](https://docs.fast.ai/) and Pytorch. To go through the coding process, you can refer to the [Jupyter notebook](https://nbviewer.jupyter.org/github/aayushmnit/Deep_learning_explorations/blob/master/3_MLP_FastAI/MLP%20using%20Fast%20%20%26%20Pytorch.ipynb). 
 
 Furthermore, I have used [Click](https://click.palletsprojects.com/en/7.x/) python package to create a command line executable script. Click makes it easy to create a CLI API by simplifying code of the implementation of error handling and also helps in creating an automatic help page.
 

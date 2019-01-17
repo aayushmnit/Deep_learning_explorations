@@ -10,23 +10,23 @@ class LeNet(nn.Module):
         self.n_class = n_class
         self.size = size
         self.in_channels = in_channels
-        self.conv1 = nn.Conv2d(in_channels=self.in_channels,
-                               out_channels=20,
-                               kernel_size=5,
-                               stride=1,
-                               padding=2)
+        self.conv1 = nn.Conv2d(
+            in_channels=self.in_channels,
+            out_channels=20,
+            kernel_size=5,
+            stride=1,
+            padding=2,
+        )
 
-        self.conv2 = nn.Conv2d(in_channels=20,
-                               out_channels=50,
-                               kernel_size=5,
-                               stride=1,
-                               padding=2)
+        self.conv2 = nn.Conv2d(
+            in_channels=20, out_channels=50, kernel_size=5, stride=1, padding=2
+        )
 
-        self.fc1 = nn.Linear(in_features=int(50*(np.square(self.size/4))),
-                             out_features=500)
+        self.fc1 = nn.Linear(
+            in_features=int(50 * (np.square(self.size / 4))), out_features=500
+        )
 
-        self.fc2 = nn.Linear(in_features=500,
-                             out_features=n_class)
+        self.fc2 = nn.Linear(in_features=500, out_features=n_class)
 
     def forward(self, x):
         # Applying first CONV => RELU => Pooling layer

@@ -2,16 +2,17 @@
 import torch.nn as nn
 import numpy as np
 
+
 class VGG(nn.Module):
     def __init__(self, features, size, n_class=10):
         super(VGG, self).__init__()
         self.features = features
         # FC=>ACT=>DO=>FC=>SOFTMAX
         self.classifier = nn.Sequential(
-            nn.Linear(int(64*np.square(size/4)), 512),
+            nn.Linear(int(64 * np.square(size / 4)), 512),
             nn.ReLU(True),
             nn.Dropout(p=0.5),
-            nn.Linear(512, n_class)
+            nn.Linear(512, n_class),
         )
 
     def forward(self, x):
@@ -19,6 +20,7 @@ class VGG(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.classifier(x)
         return x
+
 
 def make_layers(batch_norm=False):
     layers = []
@@ -32,12 +34,12 @@ def make_layers(batch_norm=False):
             if batch_norm:
                 layers += [nn.BatchNorm2d(op)]
             in_channels = op
-        layers += [nn.MaxPool2d(kernel_size=2,stride=2)]
+        layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
         layers += [nn.Dropout(0.25)]
     return nn.Sequential(*layers)
 
-def MiniVGGNet(batch_norm=False,**kwargs):
+
+def MiniVGGNet(batch_norm=False, **kwargs):
     model = VGG(make_layers(batch_norm=batch_norm), **kwargs)
     return model
-
 

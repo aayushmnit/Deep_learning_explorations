@@ -9,13 +9,16 @@ class ShallowNet(nn.Module):
         self.n_class = n_class
         self.size = size
         self.in_channels = in_channels
-        self.conv1 = nn.Conv2d(in_channels=self.in_channels,
-                               out_channels=32,
-                               kernel_size=3,
-                               stride=1,
-                               padding=1)
-        self.fc1 = nn.Linear(in_features=32*self.size*self.size,
-                             out_features=self.n_class)
+        self.conv1 = nn.Conv2d(
+            in_channels=self.in_channels,
+            out_channels=32,
+            kernel_size=3,
+            stride=1,
+            padding=1,
+        )
+        self.fc1 = nn.Linear(
+            in_features=32 * self.size * self.size, out_features=self.n_class
+        )
 
     def forward(self, x):
         # Applying first CONV => RELU layer

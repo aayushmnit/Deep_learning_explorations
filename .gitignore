@@ -1,6 +1,9 @@
 # Datasets
 data/
 
+## Ignoring VS code
+.vscode/
+
 # Presenation
 *.pptx
 

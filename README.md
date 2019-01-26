@@ -8,3 +8,4 @@ A repository of codes and experiments while learning and exploring deep learning
 4) [Shallownet using FastAI on CIFAR10 dataset](https://github.com/aayushmnit/Deep_learning_explorations/tree/master/4_Shallownet_fastai)
 5) [LeNet using FastAI on MNIST dataset](https://github.com/aayushmnit/Deep_learning_explorations/tree/master/5_LeNet_fastai)
 6) [MiniVggnet using FastAI on CIFAR10 dataset](https://github.com/aayushmnit/Deep_learning_explorations/tree/master/6_MiniVggnet_fastai)
+7) [Multi-Label facial attributes classfication using FastAI and OpenCV](https://github.com/aayushmnit/Deep_learning_explorations)

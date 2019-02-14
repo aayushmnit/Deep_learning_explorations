@@ -14,7 +14,7 @@ from pathlib import Path
 from fastai.vision.data import ImageItemList
 from fastai.vision.learner import create_cnn
 from fastai.vision import models
-from fastai.vision.image import pil2tensor
+from fastai.vision.image import pil2tensor,Image
 
 @click.command()
 @click.option(
@@ -35,8 +35,8 @@ def detect_facial_attributes(input_path, output_path, save_video):
     imagenet_stats = ([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     data = (
         ImageItemList.from_csv(path, csv_name="labels.csv")
-        .split_by_idx([])
-        .label_from_df(sep=" ")
+        .no_split()
+        .label_from_df(label_delim=" ")
         .transform(None, size=128)
         .databunch(no_check=True)
         .normalize(imagenet_stats)
@@ -51,12 +51,12 @@ def detect_facial_attributes(input_path, output_path, save_video):
 
     cap = cv2.VideoCapture(0)
     if save_video:
-        out = cv2.VideoWriter(output_path + "output.avi", -1, 20.0, (640, 480))
+	    out = cv2.VideoWriter(output_path + "output.avi", -1, 20.0, (640, 480))
 
     while True:
         # Capture frame-by-frame
         _ , frame = cap.read()
-
+        
         # Our operations on the frame come here
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -65,6 +65,7 @@ def detect_facial_attributes(input_path, output_path, save_video):
 
         ## Looping through each face
         for coords in face_coord:
+            
             ## Finding co-ordinates of face
             X, Y, w, h = coords
 
@@ -81,7 +82,7 @@ def detect_facial_attributes(input_path, output_path, save_video):
 
             ## Prediction of facial featues
             prediction = str(
-                learn.predict(pil2tensor(img_cp1, np.float32).div_(255))[0]
+                learn.predict(Image(pil2tensor(img_cp1, np.float32).div_(255)))[0]
             ).split(";")
             label = (
                 " ".join(prediction)

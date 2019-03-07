@@ -4,8 +4,8 @@ python find_similar_image.py \
 --input_path "../data/caltech101/" \
 --img_url "https://cdn.pixabay.com/photo/2016/06/08/00/03/pizza-1442946_1280.jpg" \
 --output_path "./output/output.png" \
---show_image True \
---n_items 5
+--n_items 6 \
+--show_image 
 """
 
 import click
@@ -23,7 +23,7 @@ from fastai.vision.image import pil2tensor, Image
 import matplotlib
 import matplotlib.pyplot as plt
 import cv2
-
+from imutils import resize
 
 @click.command()
 @click.option(
@@ -44,10 +44,19 @@ import cv2
     "--output_path", "-op", default="./", help="Path to the output similar images"
 )
 @click.option(
-    "--show_image", "-s", default=True, type=bool, help="Want to show output?"
+    "--show_image", "-s", is_flag=True, help="Display image in a openCV window"
 )
-@click.option("--n_items", "-n", default=5, help="Number of similar images")
-def get_arguments(input_path, img_url, output_path, show_image, n_items):
+@click.option(
+    "--n_items",
+    "-n",
+    type=click.IntRange(min=1, max=20),
+    default=5,
+    help="Number of similar images b/w 1 to 20",
+)
+def find_similar_images(input_path, img_url, output_path, show_image, n_items):
+    '''
+    Function to run everything together
+    '''
     resp, url_img = download_img_from_url(img_url)
     print("Image Download successful:{0}".format(resp))
     if resp:
@@ -104,12 +113,14 @@ def load_model(data_bunch, model_type, model_name):
 
 
 def download_img_from_url(url):
+    '''
+    Function to download image given a valid url
+    '''
     try:
         response = requests.get(url)
         img = pil_img.open(BytesIO(response.content))
         resp = True
     except:
-
         resp = False
         img = np.nan
     return resp, img
@@ -134,6 +145,9 @@ class SaveFeatures:
 
 
 def image_to_vec(url_img, hook, learner):
+    '''
+    Function to convert image to vector
+    '''
     print("Convert image to vec")
     _ = learner.predict(Image(pil2tensor(url_img, np.float32).div_(255)))
     vect = hook.features[-1]
@@ -143,19 +157,26 @@ def image_to_vec(url_img, hook, learner):
 def get_similar_images(
     url_img, conv_learn, hook, lsh, show_image, output_path, n_items=5
 ):
+    ## Converting Image to vector
     vect = image_to_vec(url_img, hook, conv_learn)
+
+    ## Finding approximate nearest neighbours using LSH
     response = lsh.query(vect, num_results=n_items + 1, distance_func="hamming")
 
+    ## Dimension calculation for plotting
     columns = 3
     rows = int(np.ceil(n_items + 1 / columns)) + 1
 
+    ## Plotting function
     fig = plt.figure(figsize=(2 * rows, 3 * rows))
     for i in range(1, columns * rows + 2):
+        ## Plotting the url_img in center of first row
         if i == 1:
             fig.add_subplot(rows, columns, i + 1)
             plt.imshow(url_img)
             plt.axis("off")
             plt.title("Input Image")
+        ## Plotting similar images row 2 onwards
         elif i < n_items + 2:
             ret_img = pil_img.open(response[i - 1][0][1])
             fig.add_subplot(rows, columns, i + 2)
@@ -163,14 +184,15 @@ def get_similar_images(
             plt.axis("off")
             plt.title(str(i - 1))
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, dpi=400, bbox_inches="tight", pad_inches=0)
+
+    ## Display if show_image is mentioned in argument
     if show_image:
         img = cv2.imread(output_path, 1)
-        cv2.imshow("image", img)
+        img = resize(img, width=600)
+        cv2.imshow("Similar images output", img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-    else:
-        pass
 
 
 classes = [
@@ -279,6 +301,5 @@ classes = [
 ]
 
 if __name__ == "__main__":
-    print("Started")
-    get_arguments()
+    find_similar_images()
 

@@ -184,7 +184,7 @@ def get_similar_images(
             plt.axis("off")
             plt.title(str(i - 1))
     fig.tight_layout()
-    fig.savefig(output_path, dpi=400, bbox_inches="tight", pad_inches=0)
+    fig.savefig(output_path, bbox_inches="tight", pad_inches=0)
 
     ## Display if show_image is mentioned in argument
     if show_image:

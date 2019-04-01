@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 from alexnet import *
 from fastai.vision import ClassificationInterpretation
 from fastai.vision.data import ImageDataBunch
+from fastai.vision.data import get_image_files
 from fastai.basic_train import Learner
 from fastai.metrics import accuracy
 from pathlib import Path
@@ -35,7 +36,6 @@ from sklearn.metrics import classification_report
 @click.option("--batch_size", "-bs", default=64, help="Batch size")
 @click.option("--epochs", "-e", default=10, help="Number of epochs")
 @click.option("--learning_rate", "-lr", default=1e-2, help="Learning Rate")
-
 def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate, batch_norm):
     # Load image databunch
     print("[INFO] Loading Data")
@@ -48,9 +48,9 @@ def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate, batc
         loss_func=nn.CrossEntropyLoss(),
         metrics=accuracy,
     )
-    
+
     # Training the model
-    print('[INFO] Training started.')
+    print("[INFO] Training started.")
     alexnet_learner.fit_one_cycle(epochs, learning_rate)
 
     # Validation accuracy
@@ -59,7 +59,7 @@ def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate, batc
     )
 
     # Saving the model
-    print('[INFO] Saving model weights.')
+    print("[INFO] Saving model weights.")
     alexnet_learner.save("alexnet_catsvsdog_stg_1_" + str(val_acc))
 
     # Evaluation
@@ -104,6 +104,7 @@ def evaluate_model(model, output_path, plot=True):
         # Plotting metric progression with each epoch
         model.recorder.plot_metrics()
         plt.savefig(output_path + "/metric.png")
+
 
 if __name__ == "__main__":
     run_alexnet()

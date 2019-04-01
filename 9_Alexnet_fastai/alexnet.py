@@ -11,18 +11,18 @@ class AlexNet(nn.Module):
         self.classifier = nn.Sequential(
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(),
-            nn.BatchNorm2d(4096),
+            nn.BatchNorm1d(4096),
             nn.Dropout(p = 0.5),
             nn.Linear(4096, 4096),
             nn.ReLU(),
-            nn.BatchNorm2d(4096),
+            nn.BatchNorm1d(4096),
             nn.Dropout(p=0.5),
             nn.Linear(4096, n_class)
         )
 
     def forward(self, x):
         x = self.features(x)
-        x = x.view(x.size(0), -1)
+        x = x.view(x.size(0), 256 * 6 * 6)
         x = self.classifier(x)
         return x
 
@@ -32,7 +32,7 @@ def make_layers():
     in_channels = 3
     
     ## CONV=>ACT=>BN=>POOL=>DO
-    layers += [nn.Conv2d(in_channels, out_channels = 96, kernel_size = 11, stride = 4, padding = 0)]
+    layers += [nn.Conv2d(in_channels, out_channels = 96, kernel_size = 11, stride = 4, padding = 2)]
     layers += [nn.ReLU()]
     layers += [nn.BatchNorm2d(96)]
     layers += [nn.MaxPool2d(kernel_size = 3, stride = 2)]
@@ -59,7 +59,7 @@ def make_layers():
     return nn.Sequential(*layers)
 
 
-def MiniVGGNet(batch_norm=True, **kwargs):
+def ALEXNet(batch_norm=True, **kwargs):
     model = AlexNet(make_layers(), **kwargs)
     return model
 

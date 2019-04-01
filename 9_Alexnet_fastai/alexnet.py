@@ -7,7 +7,7 @@ class AlexNet(nn.Module):
     def __init__(self, features, n_class=1000):
         super(AlexNet, self).__init__()
         self.features = features
-        # FC=>ACT=>DO=>FC=>SOFTMAX
+        # (FC=>ACT=>BN=>DO)x2=>FC=>SOFTMAX
         self.classifier = nn.Sequential(
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(),
@@ -58,8 +58,7 @@ def make_layers():
     layers += [nn.Dropout(p=0.25)]
     return nn.Sequential(*layers)
 
-
-def ALEXNet(batch_norm=True, **kwargs):
+def ALEXNet(**kwargs):
     model = AlexNet(make_layers(), **kwargs)
     return model
 

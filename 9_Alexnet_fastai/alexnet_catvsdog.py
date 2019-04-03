@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from alexnet import *
 from fastai.vision import ClassificationInterpretation
+from fastai.vision.transform import get_transforms
 from fastai.vision.data import ImageDataBunch
 from fastai.vision.data import get_image_files
 from fastai.basic_train import Learner

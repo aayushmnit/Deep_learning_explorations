@@ -83,7 +83,7 @@ def load_catsvsdog(input_path, batch_size):
         ds_tfms=get_transforms(),
         valid_pct=0.2,
         size=227,
-        bs=bs,
+        bs=batch_size,
     ).normalize()
 
     return data

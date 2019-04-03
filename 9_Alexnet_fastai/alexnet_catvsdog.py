@@ -40,7 +40,7 @@ from sklearn.metrics import classification_report
 def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate):
     # Load image databunch
     print("[INFO] Loading Data")
-    data = load_catsvsdog(input_path)
+    data = load_catsvsdog(input_path, batch_size)
 
     # Defining the learner
     alexnet_learner = Learner(
@@ -68,7 +68,7 @@ def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate):
     evaluate_model(alexnet_learner, output_path, plot=True)
 
 
-def load_catsvsdog(input_path):
+def load_catsvsdog(input_path, batch_size):
     """
     Function to load data from cats vs dog Kaggle competition
     """

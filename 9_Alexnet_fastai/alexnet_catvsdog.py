@@ -1,6 +1,6 @@
 # USAGE
 """
-python alexnet_catsvsdog.py \
+python alexnet_catvsdog.py \
 --input_path "../data/cats_dog" \
 --output_path "./" \
 --epochs 10 \
@@ -36,7 +36,7 @@ from sklearn.metrics import classification_report
 @click.option("--batch_size", "-bs", default=64, help="Batch size")
 @click.option("--epochs", "-e", default=10, help="Number of epochs")
 @click.option("--learning_rate", "-lr", default=1e-2, help="Learning Rate")
-def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate, batch_norm):
+def run_alexnet(input_path, output_path, batch_size, epochs, learning_rate):
     # Load image databunch
     print("[INFO] Loading Data")
     data = load_catsvsdog(input_path)

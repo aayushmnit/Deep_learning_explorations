@@ -43,5 +43,5 @@ weighted avg       0.83      0.83      0.83     10000
 - numpy
 - scikit-learn
 - Pytorch
-- fastai v1
+- fastai v1.0.45
 - click

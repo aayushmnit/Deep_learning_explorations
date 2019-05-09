@@ -14,6 +14,6 @@ Following is the logical sequence to follow the material -
 ## Dependencies
 - numpy
 - Pytorch
-- fastai v1
+- fastai v1.0.45
 - click
 - opencv2

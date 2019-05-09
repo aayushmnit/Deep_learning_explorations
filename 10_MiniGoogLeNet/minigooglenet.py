@@ -54,14 +54,14 @@ class MiniGoogLeNet(nn.Module):
         x = self.inception2d(x)  # 144 x 13 x 13
         x = self.downsample2a(x)  # 240 x 6 x 6
 
-        # Inceptionx2 => Average Pool => Dropout => Flatter
+        # Inceptionx2 => Average Pool 
         x = self.inception3a(x)  # 336 x 6 x 6
         x = self.inception3b(x)  # 336 x 6 x 6
         x = F.avg_pool2d(x, kernel_size=7)  # 366 x 1 x 1
+
+        # Dropout => Flatten => Dense(Fully-Connected)
         x = F.dropout(x, p=0.5)  # 366 x 1 x 1
         x = x.view(x.size(0), -1)  # 366
-
-        # Linear
         x = self.fc4a(x) # 10
 
         return x
@@ -74,11 +74,13 @@ class InceptionModule(nn.Module):
 
     def __init__(self, in_channels, opK1x1, opK3x3):
         super(InceptionModule, self).__init__()
+
+        ## Defining 1x1 & 3x3 convolution
         self.conv0 = BasicConv2d(in_channels, opK1x1, kernel_size=1)
         self.conv1 = BasicConv2d(in_channels, opK3x3, kernel_size=3, padding=1)
 
     def forward(self, x):
-        ## Define 1x1 & 3x3 convolution
+        # Applying 1x1 & 3x3 convolution
         conv_1x1 = self.conv0(x)
         conv_3x3 = self.conv1(x)
 
@@ -95,11 +97,19 @@ class DownsampleModule(nn.Module):
 
     def __init__(self, in_channels, k):
         super(DownsampleModule, self).__init__()
+
+        # Defining convolution layer
         self.conv0 = BasicConv2d(in_channels, k, kernel_size=3, stride=2)
 
     def forward(self, x):
+
+        # Convolution layer
         conv_3x3 = self.conv0(x)
+
+        # Pooling layer
         pool = F.max_pool2d(x, kernel_size=3, stride=2)
+
+        # Concatenation
         outputs = [conv_3x3, pool]
 
         return torch.cat(outputs, 1)
@@ -118,7 +128,7 @@ class BasicConv2d(nn.Module):
         self.bn = nn.BatchNorm2d(out_channels, eps=0.001)
 
     def forward(self, x):
-        # Define a CONV => BN => RELU
+        # Applying a CONV => BN => RELU
         x = self.conv(x)
         x = self.bn(x)
         return F.relu(x, inplace=True)

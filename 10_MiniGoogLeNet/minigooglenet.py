@@ -11,7 +11,7 @@ class MiniGoogLeNet(nn.Module):
     """
 
     def __init__(self, n_class, size, depth):
-        super(MiniGoogLeNet, self).__init__()
+        super().__init__()
         self.n_class = n_class
         self.size = size
         self.depth = depth
